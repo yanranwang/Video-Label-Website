@@ -1,0 +1,78 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<script type="text/javascript" src="jquery-1.8.1.min.js"></script>
+<script type="text/javascript">
+
+//页面加载后执行的操作
+//$.getJSON--get请求得到json数据
+//$.getJSON(url提供json数据的地址页, 传送到服务器的键值对,json数据请求成功后的处理函数)
+$(document).ready( function () {
+$.getJSON('star.php', { video1: '', relation: ''},function(data) {
+          $('#player1').attr('src', data.video1);//设置属性值
+		  $('#number').append("视频"+data.numb);
+        });
+
+
+//提交表单后执行的操作，数据传给myvideo.php，处理后返回data数据
+$('#send').click ( function () {
+   var video1Src = $('#player1').attr('src');//返回属性值
+   var relationChecked = $('div#relation input:radio[name="Q5"]:checked').val();//获取表单选择结果值
+   
+   $.getJSON('star.php', { video1: video1Src,relation: relationChecked },   function(data) {
+          $('#player1').attr('src', data.video1);//设置属性值
+		 // $('#number').attr();
+	       $('#number').text("视频"+data.numb);
+		// alert(data.video1);
+        });
+});
+});
+
+
+</script>
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
+<title>无标题文档</title>
+<style type="text/css">
+<!--
+.STYLE3 {font-size: large}
+-->
+</style>
+</head>
+
+<body>
+
+
+
+<h3>请对视频有趣程度进行评价:&nbsp;</h3>
+<ul class="overview-list">
+    <li class="overview-list-item">有趣完全源于个人喜欢.一颗心无趣，五颗星非常有趣，等级依次上升。</li>
+    <li class="overview-list-item">请尽量使结果跨越5个等级，保证一定区分度，共25个视频</li>
+  <li class="overview-list-item">一个视频看完再标，谢谢了</li>
+</ul>
+<table width="945" height="338" border="0">
+  <tr>
+    <td width="556" height="48">&nbsp;
+    <p align="center" id = "number"></p></td>
+    <td width="379" rowspan="2"  align="center"><div id="relation">
+	  <p align="left">
+	    <input type="radio" value=1 name="Q5" />
+	    <img src="1star.jpg" alt="*" width="20" height="20" /> 无趣<br>
+	    <input type="radio" value=2 name="Q5" />
+	    <img src="2star.jpg" alt="**" width="40" height="20" /> 不太有趣<br>
+	    <input type="radio" value=3 name="Q5" />
+	    <img src="3star.jpg" alt="***" width="60" height="20" /> 一般<br>
+	    <input type="radio" value=4 name="Q5" /> 
+	    <img src="4star.jpg" alt="****" width="80" height="20" />有趣<br>  
+	    <input type="radio" value=5 name="Q5" />
+	    <img src="5star.jpg" alt="*****" width="100" height="20" /> 非常有趣</p>
+	  </div>
+      <div align="left"><br>
+        <br>
+        <input id="send" type="submit" value="Submit" />
+    </div></td>
+  </tr>
+  <tr>
+    <td height="261"><div ><video id="player1"  width="480" height="320" autoplay="autoplay" controls="controls">Your browser does not support the video tag.</video></div></td>
+  </tr>
+</table>
+<p>&nbsp;</p>
